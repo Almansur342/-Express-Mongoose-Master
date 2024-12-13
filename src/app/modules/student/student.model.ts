@@ -4,8 +4,7 @@ import {
   LocalGuardian,
   Student,
   UserName,
-} from './student/student.interface';
-
+} from './student.interface';
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
@@ -76,6 +75,12 @@ const studentSchema = new Schema<Student>({
     required: [true, 'Student ID is required'],
     unique: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'User id is required'],
+    unique: true,
+    ref: 'User',
+  },
   name: {
     type: userNameSchema,
     required: [true, 'Name is required'],
@@ -127,11 +132,9 @@ const studentSchema = new Schema<Student>({
   profileImage: {
     type: String,
   },
-  isActive: {
-    type: String,
-    enum: ['active', 'blocked'],
-    default: 'active',
-    required: [true, 'Status is required'],
+  isDeleted: {
+    type: Boolean,
+    default: false,
   },
 });
 
